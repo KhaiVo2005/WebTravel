@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <!-- ✅ HEADER -->
+    <header>
+        <div class="app-name">🌍 App Du Lịch</div>
+        <div class="user-info">
+            <span>Ngọc Khải</span>
+            <img src="avatar.jpg" alt="avatar">
+        </div>
+    </header>
+
+    <!-- ✅ BODY GRID: sidebar + main -->
+    <div class="main-layout">
+        <!-- 🔹 Sidebar Navigation -->
+        <nav class="sidebar">
+            <ul>
+                <li><a href="#">🏠 Trang chủ</a></li>
+                <li><a href="/DiaDiems/Index">📍 Địa điểm</a></li>
+                <li><a href="/LoaiDichVus/Index">🛠️ Dịch vụ</a></li>
+                <li><a href="#">👤 Tài khoản</a></li>
+                <li><a href="#">🧭 Tour</a></li>
+                <li><a href="#">💬 Diễn đàn</a></li>
+                <li><a href="#">🧑‍🤝‍🧑 Bạn bè</a></li>
+            </ul>
+        </nav>
+
+        <!-- 🔸 Main Content -->
+        <main class="main-content" style="overflow-y: auto; max-height: 100vh;">
+            @RenderBody()
+        </main>
+    </div>
+</body>
+</html>

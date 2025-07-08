@@ -1,0 +1,26 @@
+﻿@model IEnumerable<LoaiDichVu>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-wrapper">
+    @foreach (var dv in Model)
+    {
+        <div class="service-card">
+            <img src="/@dv.Anh" alt="@dv.TenDV" />
+            <div class="info">
+                <h4>@dv.TenDV</h4>
+                <p>
+                    @(string.IsNullOrWhiteSpace(dv.MoTa)
+                                    ? "Không có mô tả."
+                                    : dv.MoTa.Length > 60 ? dv.MoTa.Substring(0, 60) + "..." : dv.MoTa)
+            </p>
+            <small class="text-danger fw-bold">@dv.GiaDV.ToString("N0") VND</small>
+        </div>
+        <button class="add-btn" title="Thêm vào lịch trình">+</button>
+    </div>
+        }
+</div>
+

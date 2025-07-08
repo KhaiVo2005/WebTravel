@@ -1,0 +1,26 @@
+﻿@model IEnumerable<DiaDiem>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-wrapper">
+    @foreach (var d in Model)
+    {
+        <div class="location-card">
+            <img src="/@d.Anh" alt="@d.TenDiaDiem" />
+            <div class="info">
+                <h4>@d.TenDiaDiem</h4>
+                <p>
+                    @(string.IsNullOrWhiteSpace(d.MoTa)
+                                    ? "Không có mô tả."
+                                    : d.MoTa.Length > 60 ? d.MoTa.Substring(0, 60) + "..." : d.MoTa)
+            </p>
+        </div>
+        <button class="add-btn" title="Thêm vào lịch trình">+</button>
+    </div>
+        }
+</div>
+
+

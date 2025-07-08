@@ -1,0 +1,46 @@
+﻿@using WebTravel.Models.Models
+@model HomeViewModel
+
+<!-- Địa điểm hot -->
+<section class="section">
+    <h3>Địa điểm hot</h3>
+    <div class="card-grid">
+        @foreach (var d in Model.DiaDiems)
+        {
+            <div class="card">
+                <img src="/@d.Anh" alt="@d.TenDiaDiem" />
+                <p>📍 @d.TenDiaDiem</p>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Bài đăng hot -->
+<section class="section">
+    <h3>Bài đăng hot</h3>
+    <div class="card-grid">
+        @foreach (var b in Model.BaiDangs)
+        {
+            <div class="card">
+                <img src="/@b.AnhVideo" alt="Bài đăng" />
+                <p>📝 @b.NoiDung.Substring(0, Math.Min(40, b.NoiDung.Length))...</p>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Dịch vụ hot -->
+<section class="section">
+    <h3>Dịch vụ hot</h3>
+
+    @foreach (var dv in Model.DichVus)
+    {
+        <div class="card-vertical">
+            <img src="/@dv.Anh" alt="@dv.TenDV" />
+            <div class="info">
+                <p>🛎️ @dv.TenDV</p>
+                <small>@dv.MoTa</small>
+            </div>
+        </div>
+    }
+</section>
