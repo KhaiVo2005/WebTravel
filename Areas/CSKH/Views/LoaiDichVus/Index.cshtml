@@ -1,0 +1,66 @@
+﻿@model IEnumerable<LoaiDichVu>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/CSKH/Views/Shared/_LayoutCSKH.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TenDV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GiaDV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MoTa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Anh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NhanVien)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiaDiem)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenDV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiaDV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoTa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NhanVien.MaNV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiaDiem.MaDD)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaLoaiDV">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MaLoaiDV">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaLoaiDV">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

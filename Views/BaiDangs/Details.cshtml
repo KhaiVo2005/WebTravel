@@ -1,0 +1,58 @@
+﻿@using WebTravel.Models.Models
+@model CmtBaiDangKH
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mt-4 mb-4">📝 Bài viết</h2>
+
+<div class="post-card shadow-sm p-4 mb-5 bg-white rounded">
+
+    <!-- Lượt thích và người đăng -->
+    <div class="list-group-item d-flex align-items-center">
+        <img src="/@Model.NguoiDang.AnhDaiDien"
+             class="rounded-circle me-3"
+             alt="Avatar"
+             width="40" height="40"
+             style="object-fit: cover;" />
+        <div>
+            <strong>@Model.NguoiDang.HoTen</strong>
+        </div>
+    </div>
+
+    <!-- Ảnh bài viết -->
+    @if (!string.IsNullOrEmpty(Model.BaiDang.AnhVideo))
+    {
+        <img src="/@Model.BaiDang.AnhVideo"
+             alt="Ảnh bài viết"
+             class="img-fluid mb-3 rounded"
+             style="max-height: 400px; object-fit: cover;" />
+    }
+
+    <!-- Nội dung -->
+    <p>@Model.BaiDang.NoiDung</p>
+    <small class="text-danger fw-bold">❤️ @Model.BaiDang.LuotLike lượt thích</small>
+</div>
+
+<hr />
+
+<h4 class="mb-3">💬 Bình luận (@Model.BinhLuans.Count)</h4>
+
+<ul class="list-group">
+    @foreach (var cmt in Model.BinhLuans)
+    {
+        <li class="list-group-item d-flex align-items-center">
+            <img src="/@Model.DanhSachNguoiBinhLuan.GetValueOrDefault(cmt.MaKH).AnhDaiDien"
+                 class="rounded-circle me-3"
+                 alt="Avatar"
+                 width="40" height="40"
+                 style="object-fit: cover;" />
+            <div>
+                <strong>@Model.DanhSachNguoiBinhLuan.GetValueOrDefault(cmt.MaKH).HoTen:</strong> @cmt.NoiDung
+            </div>
+        </li>
+    }
+</ul>
+

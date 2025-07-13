@@ -1,0 +1,43 @@
+﻿@model BaiDang
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/CSKH/Views/Shared/_LayoutCSKH.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>BaiDang</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NoiDung)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NoiDung)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AnhVideo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AnhVideo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LuotLike)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LuotLike)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.KhachHang)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.KhachHang.MaKH)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.MaBaiDang">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

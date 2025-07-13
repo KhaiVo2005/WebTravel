@@ -1,0 +1,17 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    ViewData["Title"] = "Đang phát triển";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container text-center mt-5">
+    <img src="https://cdn-icons-png.flaticon.com/512/565/565547.png" width="120" class="mb-4" alt="Đang phát triển" />
+    <h2 class="text-primary">🚧 Tính năng đang được phát triển</h2>
+    <p class="lead text-muted">Chúng tôi sẽ sớm cập nhật chức năng này. Cảm ơn bạn đã quan tâm!</p>
+    <a class="btn btn-outline-primary mt-3" href="@Url.Action("TrangChu", "Home")">Quay về trang chủ</a>
+</div>

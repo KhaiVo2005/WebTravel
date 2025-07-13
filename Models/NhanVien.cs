@@ -6,7 +6,6 @@ public class NhanVien
 {
     [Key]
     public Guid MaNV { get; set; }
-
     public string HoTen { get; set; }
     public string TenDangNhap { get; set; }
     public string MatKhau { get; set; }

@@ -29,5 +29,7 @@ namespace WebTravel.Controllers
 
             return View(vm);
         }
+
+        public IActionResult Processing() { return View(); }
     }
 }

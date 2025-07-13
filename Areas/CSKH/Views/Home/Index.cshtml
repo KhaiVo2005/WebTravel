@@ -1,0 +1,100 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Trang chủ CSKH";
+    Layout = "~/Areas/CSKH/Views/Shared/_LayoutCSKH.cshtml";
+    var chartTongQuat = ViewBag.ChartTongQuat as List<dynamic> ?? new List<dynamic>();
+}
+
+<h2 class="mb-4">Tổng quan hệ thống</h2>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white mb-3">
+            <div class="card-body">
+                <h5>Khách hàng</h5>
+                <h3>@ViewBag.TongKhachHang</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-success text-white mb-3">
+            <div class="card-body">
+                <h5>Nhân viên</h5>
+                <h3>@ViewBag.TongNhanVien</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-warning text-white mb-3">
+            <div class="card-body">
+                <h5>Bài viết</h5>
+                <h3>@ViewBag.TongBaiViet</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card bg-info text-white mb-3">
+            <div class="card-body">
+                <h5>Dịch vụ</h5>
+                <h3>@ViewBag.TongDichVu</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-dark text-white mb-3">
+            <div class="card-body">
+                <h5>Địa điểm</h5>
+                <h3>@ViewBag.TongDiaDiem</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-secondary text-white mb-3">
+            <div class="card-body">
+                <h5>Thành phố</h5>
+                <h3>@ViewBag.TongThanhPho</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <strong>Thống kê tổng quát</strong>
+    </div>
+    <div class="card-body">
+        <canvas id="chartTongQuat"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('chartTongQuat');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(chartTongQuat.Select(x => x.Ten))),
+                datasets: [{
+                    label: 'Số lượng',
+                    data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(chartTongQuat.Select(x => x.SoLuong))),
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        precision: 0
+                    }
+                }
+            }
+        });
+    </script>
+}

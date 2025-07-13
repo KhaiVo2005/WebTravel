@@ -13,6 +13,7 @@ public class BaiDang
 
     [ForeignKey("KhachHang")]
     public Guid MaKH { get; set; }
+
     public KhachHang KhachHang { get; set; }
 
     public ICollection<CmtBaiDang> CmtBaiDangs { get; set; } = new List<CmtBaiDang>();

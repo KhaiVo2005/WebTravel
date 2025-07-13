@@ -14,6 +14,7 @@ public class KhachHang
     public DateTime NgaySinh { get; set; }
     public string GioiTinh { get; set; }
     public string SoDienThoai { get; set; }
+    public string AnhDaiDien { get; set; }
 
     public ICollection<TourCaNhan> TourCaNhans { get; set; } = new List<TourCaNhan>();
     public ICollection<BaiDang> BaiDangs { get; set; } = new List<BaiDang>();

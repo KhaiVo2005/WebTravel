@@ -1,0 +1,26 @@
+﻿@model IEnumerable<BaiDang>
+
+@{
+    ViewData["Title"] = "Bài đăng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>📝 Danh sách bài đăng</h2>
+
+<div class="post-wrapper">
+    @foreach (var b in Model)
+    {
+        <a class="post-card" href="Details/@b.MaBaiDang">
+            <img src="/@b.AnhVideo" alt="Ảnh bài viết" />
+            <div class="content">
+                <p class="noidung">@b.NoiDung</p>
+                <div class="actions">
+                    <span class="like">❤️ @b.LuotLike</span>
+                    <span class="comment">💬 @(b.CmtBaiDangs?.Count ?? 0)</span>
+                </div>
+            </div>
+        </a>
+    }
+</div>
+
+<a href="/BaiDangs/Create" class="fab-btn" title="Thêm bài viết">+</a>
