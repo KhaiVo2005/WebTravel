@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebTravel.Attribute;
 using WebTravel.Data;
 using WebTravel.Models.Models;
 
 namespace WebTravel.Controllers
 {
+    [CheckLogin]
     public class HomeController : Controller
     {
         TravelDbContext _context;
@@ -31,5 +33,10 @@ namespace WebTravel.Controllers
         }
 
         public IActionResult Processing() { return View(); }
+
+        public IActionResult TaiKhoan()
+        {
+            return View();
+        }
     }
 }

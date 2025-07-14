@@ -11,6 +11,7 @@ public class LoaiDichVu
     public decimal GiaDV { get; set; }
     public string MoTa { get; set; }
     public string Anh { get; set; }
+    public int TrangThai { get; set; }
 
     [ForeignKey("NhanVien")]
     public Guid MaNV { get; set; }

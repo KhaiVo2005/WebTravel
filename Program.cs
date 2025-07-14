@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using WebTravel.Data;
 
@@ -12,6 +13,13 @@ builder.Services.AddDbContext<TravelDbContext>(opts => {
 });
 
 builder.Services.AddSession();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";
+        options.AccessDeniedPath = "/Account/AccessDenied";
+    });
 
 var app = builder.Build();
 
@@ -29,6 +37,7 @@ app.UseSession();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -37,12 +46,12 @@ app.MapRazorPages()
 
 app.MapControllerRoute(
     name: "area",
-    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    pattern: "{area:exists}/{controller=Account}/{action=Login}/{id?}"
 );
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Start}/{action=Login}/{id?}"
+    pattern: "{controller=Account}/{action=Login}/{id?}"
 );
 
 app.Run();

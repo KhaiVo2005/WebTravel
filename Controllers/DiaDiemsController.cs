@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using WebTravel.Attribute;
 using WebTravel.Data;
 
 namespace WebTravel.Controllers
 {
+    [CheckLogin]
     public class DiaDiemsController : Controller
     {
         private readonly TravelDbContext _context;

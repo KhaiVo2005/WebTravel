@@ -6,7 +6,7 @@
 }
 
 <div class="card-wrapper">
-    @foreach (var dv in Model)
+    @foreach (var dv in Model.Where(d => d.TrangThai == 1))
     {
         <div class="service-card">
             <img src="/@dv.Anh" alt="@dv.TenDV" />

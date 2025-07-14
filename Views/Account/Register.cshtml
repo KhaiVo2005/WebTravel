@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "../Shared/_LayoutStart";
+}
+
+<div class="register-container">
+    <h2>Đăng ký tài khoản</h2>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="text-danger">@ViewBag.Error</div>
+    }
+
+    <form method="post" action="/Account/register">
+        <input type="text" name="hoTen" placeholder="Họ tên" required />
+        <input type="text" name="tenDangNhap" placeholder="Tên đăng nhập" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="text" name="diaChi" placeholder="Địa chỉ" required />
+        <input type="tel" name="soDienThoai" placeholder="Số điện thoại" required />
+
+        <div class="gender">
+            <label><input type="radio" name="gioiTinh" value="Nam" required /> Nam</label>
+            <label><input type="radio" name="gioiTinh" value="Nữ" /> Nữ</label>
+        </div>
+
+        <label for="dob">Ngày sinh:</label>
+        <input type="date" id="dob" name="ngaySinh" required />
+
+        <input type="password" name="matKhau" placeholder="Mật khẩu" required />
+        <input type="password" name="xacNhanMatKhau" placeholder="Xác nhận mật khẩu" required />
+
+        <button type="submit">Đăng ký</button>
+    </form>
+</div>
+
+@if (ViewBag.SuccessMessage != null)
+{
+    <script>
+        alert("@ViewBag.SuccessMessage");
+        window.location.href = '/Home/TrangChu';
+    </script>
+}

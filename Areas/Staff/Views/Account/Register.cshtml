@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<link href="~/css/Register.css" rel="stylesheet" />
+
+<div class="form-container">
+    <h2>Đăng ký nhân viên</h2>
+    <form asp-action="Register" asp-controller="Account" asp-area="Staff" method="post">
+        <div class="form-group">
+            <label for="TenDangNhap">Tên đăng nhập</label>
+            <input type="text" id="TenDangNhap" name="TenDangNhap" required />
+        </div>
+        <div class="form-group">
+            <label for="HoTen">Họ và tên</label>
+            <input type="text" id="HoTen" name="HoTen" required />
+        </div>
+        <div class="form-group">
+            <label for="SoDienThoai">SĐT liên hệ</label>
+            <input type="tel" id="SoDienThoai" name="SoDienThoai" required />
+        </div>
+        <div class="form-group">
+            <label for="Email">Email liên hệ</label>
+            <input type="email" id="Email" name="Email" required />
+        </div>
+        <div class="form-group">
+            <label for="MatKhau">Mật khẩu</label>
+            <input type="password" id="MatKhau" name="MatKhau" required />
+        </div>
+        <div class="form-group">
+            <label for="DiaChi">Địa chỉ</label>
+            <input type="text" id="DiaChi" name="DiaChi" required />
+        </div>
+
+        <button type="submit">Đăng ký</button>
+    </form>
+</div>

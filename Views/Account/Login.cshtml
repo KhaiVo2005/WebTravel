@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "../Shared/_LayoutStart";
+}
+
+<div class="form-container">
+    <h2>Đăng nhập</h2>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="text-danger">@ViewBag.Error</div>
+    }
+
+    <form method="post" action="/Account/login">
+        <input type="text" name="username" placeholder="Tên đăng nhập" required />
+        <input type="password" name="password" placeholder="Mật khẩu" required />
+        <button type="submit">Đăng nhập</button>
+
+        <p class="login-link">
+            Chưa có tài khoản?
+            <a href="/Account/Register">Đăng ký</a>
+        </p>
+    </form>
+</div>

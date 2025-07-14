@@ -22,8 +22,27 @@ namespace WebTravel.Areas.CSKH.Controllers
         // GET: CSKH/LoaiDichVus
         public async Task<IActionResult> Index()
         {
-            var travelDbContext = _context.LoaiDichVus.Include(l => l.DiaDiem).Include(l => l.NhanVien);
-            return View(await travelDbContext.ToListAsync());
+            var danhSach = await _context.LoaiDichVus
+            .Include(l => l.NhanVien)
+            .Include(l => l.DiaDiem)
+            .OrderBy(l => l.TrangThai) 
+            .ToListAsync();
+
+            return View(danhSach);
+        }
+
+        public async Task<IActionResult> CapNhatTrangThai(Guid id, int trangThai)
+        {
+            var loaiDV = await _context.LoaiDichVus.FindAsync(id);
+            if (loaiDV == null)
+            {
+                return NotFound();
+            }
+
+            loaiDV.TrangThai = trangThai; // 1: duyệt, 0: từ chối
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: CSKH/LoaiDichVus/Details/5

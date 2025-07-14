@@ -1,0 +1,31 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Tài khoản cá nhân";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/TaiKhoan.css" rel="stylesheet" />
+
+<div class="account-wrapper">
+    <!-- 🔝 Thông tin người dùng -->
+    <div class="user-header">
+        <img src="default.jpg" alt="avatar">
+        <div class="name">@Context.Session.GetString("FullName")</div>
+    </div>
+
+    <div class="btn-view-profile">👤 Xem tất cả trang cá nhân</div>
+    <div class="divider"></div>
+
+    <!-- 🛠️ Các mục chức năng -->
+    <div class="menu-section">
+        <div class="menu-item"><i>📦</i> Dịch vụ đã thuê</div>
+        <div class="menu-item"><i>🧭</i> Tour đã tạo</div>
+        <div class="menu-item"><i>📝</i> Bài viết cá nhân</div>
+        <div class="menu-item"><i>❤️</i> Địa điểm yêu thích</div>
+        <div class="menu-item"><i>⚙️</i> Cài đặt & quyền riêng tư</div>
+        <div class="menu-item"><i>❓</i> Trợ giúp & hỗ trợ</div>
+        <div class="menu-item"><i>🚪</i> Đăng xuất</div>
+    </div>
+</div>

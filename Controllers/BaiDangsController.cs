@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using WebTravel.Attribute;
 using WebTravel.Data;
 using WebTravel.Models.Models;
 
 namespace WebTravel.Controllers
 {
+    [CheckLogin]
     public class BaiDangsController : Controller
     {
         private readonly TravelDbContext _context;

@@ -2,10 +2,14 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Areas/CSKH/Views/Shared/_LayoutCSKH.cshtml";
+    Layout = "~/Areas/Staff/Views/Shared/_LayoutStaff.cshtml";
 }
 
 <h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
@@ -22,10 +26,13 @@
                 @Html.DisplayNameFor(model => model.Anh)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.DiaDiem)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.NhanVien)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DiaDiem)
+                @Html.DisplayNameFor(model => model.TrangThai)
             </th>
             <th></th>
         </tr>
@@ -46,27 +53,29 @@
                 @Html.DisplayFor(modelItem => item.Anh)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NhanVien.MaNV)
+                @Html.DisplayFor(modelItem => item.NhanVien.HoTen)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DiaDiem.MaDD)
+                @Html.DisplayFor(modelItem => item.DiaDiem.TenDiaDiem)
             </td>
+                <td>
+                    @if (item.TrangThai == 0)
+                    {
+                        <span class="badge bg-warning text-dark">⏳ Chờ duyệt</span>
+                    }
+                    else if (item.TrangThai == 1)
+                    {
+                        <span class="badge bg-success">✔️ Đã duyệt</span>
+                    }
+                    else if (item.TrangThai == 2)
+                    {
+                        <span class="badge bg-danger">❌ Từ chối</span>
+                    }
+                </td>
             <td>
-                @if (item.TrangThai == 0)
-                {
-                    <span class="badge bg-warning text-dark">⏳ Chờ duyệt</span>
-                    <br />
-                    <a asp-action="CapNhatTrangThai" asp-route-id="@item.MaLoaiDV" asp-route-trangThai="1" class="btn btn-success btn-sm mt-1">✔️ Duyệt</a>
-                    <a asp-action="CapNhatTrangThai" asp-route-id="@item.MaLoaiDV" asp-route-trangThai="2" class="btn btn-danger btn-sm mt-1">❌ Từ chối</a>
-                }
-                else if (item.TrangThai == 1)
-                {
-                    <span class="badge bg-success">✔️ Đã duyệt</span>
-                }
-                else if (item.TrangThai == 2)
-                {
-                    <span class="badge bg-danger">❌ Đã từ chối</span>
-                }
+                <a asp-action="Edit" asp-route-id="@item.MaLoaiDV">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MaLoaiDV">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaLoaiDV">Delete</a>
             </td>
         </tr>
 }

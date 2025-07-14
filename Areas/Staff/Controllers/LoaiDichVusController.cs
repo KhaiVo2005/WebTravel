@@ -8,9 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using WebTravel.Attribute;
 using WebTravel.Data;
 
-namespace WebTravel.Controllers
+namespace WebTravel.Areas.Staff.Controllers
 {
-    [CheckLogin]
+    [CheckStaff]
+    [Area("Staff")]
     public class LoaiDichVusController : Controller
     {
         private readonly TravelDbContext _context;
@@ -20,14 +21,14 @@ namespace WebTravel.Controllers
             _context = context;
         }
 
-        // GET: LoaiDichVus
+        // GET: Staff/LoaiDichVus
         public async Task<IActionResult> Index()
         {
             var travelDbContext = _context.LoaiDichVus.Include(l => l.DiaDiem).Include(l => l.NhanVien);
             return View(await travelDbContext.ToListAsync());
         }
 
-        // GET: LoaiDichVus/Details/5
+        // GET: Staff/LoaiDichVus/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -47,7 +48,7 @@ namespace WebTravel.Controllers
             return View(loaiDichVu);
         }
 
-        // GET: LoaiDichVus/Create
+        // GET: Staff/LoaiDichVus/Create
         public IActionResult Create()
         {
             ViewData["MaDD"] = new SelectList(_context.DiaDiems, "MaDD", "MaDD");
@@ -55,13 +56,14 @@ namespace WebTravel.Controllers
             return View();
         }
 
-        // POST: LoaiDichVus/Create
+        // POST: Staff/LoaiDichVus/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MaLoaiDV,TenDV,GiaDV,MoTa,Anh,MaNV,MaDD")] LoaiDichVu loaiDichVu)
         {
+            loaiDichVu.TrangThai = 0; 
             if (ModelState.IsValid)
             {
                 loaiDichVu.MaLoaiDV = Guid.NewGuid();
@@ -74,7 +76,7 @@ namespace WebTravel.Controllers
             return View(loaiDichVu);
         }
 
-        // GET: LoaiDichVus/Edit/5
+        // GET: Staff/LoaiDichVus/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -92,12 +94,12 @@ namespace WebTravel.Controllers
             return View(loaiDichVu);
         }
 
-        // POST: LoaiDichVus/Edit/5
+        // POST: Staff/LoaiDichVus/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("MaLoaiDV,TenDV,GiaDV,MoTa,Anh,MaNV,MaDD")] LoaiDichVu loaiDichVu)
+        public async Task<IActionResult> Edit(Guid id, [Bind("MaLoaiDV,TenDV,GiaDV,MoTa,Anh,TrangThai,MaNV,MaDD")] LoaiDichVu loaiDichVu)
         {
             if (id != loaiDichVu.MaLoaiDV)
             {
@@ -129,7 +131,7 @@ namespace WebTravel.Controllers
             return View(loaiDichVu);
         }
 
-        // GET: LoaiDichVus/Delete/5
+        // GET: Staff/LoaiDichVus/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -149,7 +151,7 @@ namespace WebTravel.Controllers
             return View(loaiDichVu);
         }
 
-        // POST: LoaiDichVus/Delete/5
+        // POST: Staff/LoaiDichVus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
