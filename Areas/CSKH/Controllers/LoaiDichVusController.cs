@@ -100,13 +100,15 @@ namespace WebTravel.Areas.CSKH.Controllers
                 return NotFound();
             }
 
-            var loaiDichVu = await _context.LoaiDichVus.FindAsync(id);
+            var loaiDichVu = await _context.LoaiDichVus
+            .Include(ldv => ldv.NhanVien)
+            .FirstOrDefaultAsync(ldv => ldv.MaLoaiDV == id);
             if (loaiDichVu == null)
             {
                 return NotFound();
             }
-            ViewData["MaDD"] = new SelectList(_context.DiaDiems, "MaDD", "MaDD", loaiDichVu.MaDD);
-            ViewData["MaNV"] = new SelectList(_context.NhanViens, "MaNV", "MaNV", loaiDichVu.MaNV);
+            ViewData["MaDD"] = new SelectList(_context.DiaDiems, "TenDV", "TenDV", loaiDichVu.TenDV);
+            ViewData["MaNV"] = new SelectList(_context.NhanViens, "HoTen", "HoTen", loaiDichVu.NhanVien.HoTen);
             return View(loaiDichVu);
         }
 

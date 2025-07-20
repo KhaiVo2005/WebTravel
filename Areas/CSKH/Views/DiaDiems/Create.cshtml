@@ -1,48 +1,61 @@
 ﻿@model DiaDiem
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Thêm địa điểm";
     Layout = "~/Areas/CSKH/Views/Shared/_LayoutCSKH.cshtml";
 }
 
-<h1>Create</h1>
+<h2 class="mb-4">Thêm địa điểm</h2>
 
-<h4>DiaDiem</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TenDiaDiem" class="control-label"></label>
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="TenDiaDiem" class="form-label"></label>
                 <input asp-for="TenDiaDiem" class="form-control" />
                 <span asp-validation-for="TenDiaDiem" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="MoTa" class="control-label"></label>
-                <input asp-for="MoTa" class="form-control" />
+
+            <div class="form-group mb-3">
+                <label asp-for="MoTa" class="form-label"></label>
+                <textarea asp-for="MoTa" class="form-control"></textarea>
                 <span asp-validation-for="MoTa" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Anh" class="control-label"></label>
-                <input asp-for="Anh" class="form-control" type="file"/>
+
+            <div class="form-group mb-3">
+                <label asp-for="Anh" class="form-label">Ảnh địa điểm</label>
+                <input type="file" name="AnhFile" class="form-control" accept="image/*" onchange="previewImage(this)" />
                 <span asp-validation-for="Anh" class="text-danger"></span>
+                <img id="preview" src="#" alt="Preview" class="mt-2" style="max-height: 150px; display: none;" />
             </div>
-            <div class="form-group">
-                <label asp-for="MaTP" class="control-label"></label>
-                <select asp-for="MaTP" class ="form-control" asp-items="ViewBag.MaTP"></select>
+
+            <div class="form-group mb-3">
+                <label asp-for="MaTP" class="form-label"></label>
+                <select asp-for="MaTP" class="form-control" asp-items="ViewBag.MaTP"></select>
+                <span asp-validation-for="MaTP" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+
+            <button type="submit" class="btn btn-success">Tạo mới</button>
+            <a asp-action="Index" class="btn btn-secondary ms-2">Huỷ</a>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function previewImage(input) {
+            const preview = document.getElementById('preview');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 }

@@ -1,43 +1,40 @@
 ﻿@model DiaDiem
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Chi tiết địa điểm";
     Layout = "~/Areas/CSKH/Views/Shared/_LayoutCSKH.cshtml";
 }
 
-<h1>Details</h1>
+<h2 class="mb-4">Chi tiết địa điểm</h2>
 
-<div>
-    <h4>DiaDiem</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TenDiaDiem)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TenDiaDiem)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MoTa)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MoTa)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Anh)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Anh)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThanhPho)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThanhPho.MaTP)
-        </dd>
-    </dl>
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Tên địa điểm</dt>
+            <dd class="col-sm-9">@Model.TenDiaDiem</dd>
+
+            <dt class="col-sm-3">Mô tả</dt>
+            <dd class="col-sm-9">@Model.MoTa</dd>
+
+            <dt class="col-sm-3">Ảnh</dt>
+            <dd class="col-sm-9">
+                @if (!string.IsNullOrEmpty(Model.Anh))
+                {
+                    <img src="/@Model.Anh" width="300" class="img-thumbnail" />
+                }
+                else
+                {
+                    <span class="text-muted">Không có ảnh</span>
+                }
+            </dd>
+
+            <dt class="col-sm-3">Thành phố</dt>
+            <dd class="col-sm-9">@Model.ThanhPho?.TenThanhPho</dd>
+        </dl>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.MaDD">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="mt-3">
+    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.MaDD">Sửa</a>
+    <a class="btn btn-secondary ml-2" asp-action="Index">Quay lại danh sách</a>
 </div>

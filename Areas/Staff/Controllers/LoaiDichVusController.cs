@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using WebTravel.Attribute;
 using WebTravel.Data;
 
@@ -24,9 +25,22 @@ namespace WebTravel.Areas.Staff.Controllers
         // GET: Staff/LoaiDichVus
         public async Task<IActionResult> Index()
         {
-            var travelDbContext = _context.LoaiDichVus.Include(l => l.DiaDiem).Include(l => l.NhanVien);
-            return View(await travelDbContext.ToListAsync());
+            var maNvStr = HttpContext.Session.GetString("Id");
+
+            if (string.IsNullOrEmpty(maNvStr) || !Guid.TryParse(maNvStr, out Guid maNv))
+            {
+                return RedirectToAction("Login", "Account", new { area = "Staff" });
+            }
+
+            var loaiDichVus = await _context.LoaiDichVus
+                .Include(l => l.DiaDiem)
+                .Include(l => l.NhanVien)
+                .Where(l => l.MaNV == maNv)
+                .ToListAsync();
+
+            return View(loaiDichVus);
         }
+
 
         // GET: Staff/LoaiDichVus/Details/5
         public async Task<IActionResult> Details(Guid? id)
@@ -51,7 +65,7 @@ namespace WebTravel.Areas.Staff.Controllers
         // GET: Staff/LoaiDichVus/Create
         public IActionResult Create()
         {
-            ViewData["MaDD"] = new SelectList(_context.DiaDiems, "MaDD", "MaDD");
+            ViewData["MaDD"] = new SelectList(_context.DiaDiems, "MaDD", "TenDiaDiem");
             ViewData["MaNV"] = new SelectList(_context.NhanViens, "MaNV", "MaNV");
             return View();
         }
@@ -63,15 +77,18 @@ namespace WebTravel.Areas.Staff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MaLoaiDV,TenDV,GiaDV,MoTa,Anh,MaNV,MaDD")] LoaiDichVu loaiDichVu)
         {
+
+            loaiDichVu.MaNV = Guid.Parse(HttpContext.Session.GetString("Id"));
             loaiDichVu.TrangThai = 0; 
+
+            loaiDichVu.MaLoaiDV = Guid.NewGuid();
             if (ModelState.IsValid)
-            {
-                loaiDichVu.MaLoaiDV = Guid.NewGuid();
+            { 
                 _context.Add(loaiDichVu);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaDD"] = new SelectList(_context.DiaDiems, "MaDD", "MaDD", loaiDichVu.MaDD);
+            ViewData["MaDD"] = new SelectList(_context.DiaDiems, "MaDD", "TenDiaDiem", loaiDichVu.DiaDiem.TenDiaDiem);
             ViewData["MaNV"] = new SelectList(_context.NhanViens, "MaNV", "MaNV", loaiDichVu.MaNV);
             return View(loaiDichVu);
         }
@@ -84,12 +101,12 @@ namespace WebTravel.Areas.Staff.Controllers
                 return NotFound();
             }
 
-            var loaiDichVu = await _context.LoaiDichVus.FindAsync(id);
+            var loaiDichVu = await _context.LoaiDichVus.Include(dd => dd.DiaDiem).FirstOrDefaultAsync(dv => dv.MaLoaiDV == id);
             if (loaiDichVu == null)
             {
                 return NotFound();
             }
-            ViewData["MaDD"] = new SelectList(_context.DiaDiems, "MaDD", "MaDD", loaiDichVu.MaDD);
+            ViewData["MaDD"] = new SelectList(_context.DiaDiems, "MaDD", "TenDiaDiem", loaiDichVu.DiaDiem.TenDiaDiem);
             ViewData["MaNV"] = new SelectList(_context.NhanViens, "MaNV", "MaNV", loaiDichVu.MaNV);
             return View(loaiDichVu);
         }
@@ -99,8 +116,9 @@ namespace WebTravel.Areas.Staff.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("MaLoaiDV,TenDV,GiaDV,MoTa,Anh,TrangThai,MaNV,MaDD")] LoaiDichVu loaiDichVu)
+        public async Task<IActionResult> Edit(Guid id, [Bind("MaLoaiDV,TenDV,GiaDV,MoTa,Anh,MaDD")] LoaiDichVu loaiDichVu)
         {
+            loaiDichVu.MaNV = Guid.Parse(HttpContext.Session.GetString("Id"));
             if (id != loaiDichVu.MaLoaiDV)
             {
                 return NotFound();
@@ -126,7 +144,7 @@ namespace WebTravel.Areas.Staff.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaDD"] = new SelectList(_context.DiaDiems, "MaDD", "MaDD", loaiDichVu.MaDD);
+            ViewData["MaDD"] = new SelectList(_context.DiaDiems, "MaDD", "TenDiaDiem", loaiDichVu.DiaDiem.TenDiaDiem);
             ViewData["MaNV"] = new SelectList(_context.NhanViens, "MaNV", "MaNV", loaiDichVu.MaNV);
             return View(loaiDichVu);
         }

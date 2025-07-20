@@ -13,7 +13,7 @@ public class KhachHang_LoaiDichVu
 
     [ForeignKey("DiaDiemTour")]
     public Guid MaDiaDiemTour { get; set; }
-    public DiaDiemTour DiaDiemTour { get; set; }
+    public DiaDiemTour? DiaDiemTour { get; set; }
     public Guid MaLoaiDV { get; set; }
 
     public ICollection<DanhGiaDichVu> DanhGiaDichVus { get; set; } = new List<DanhGiaDichVu>();

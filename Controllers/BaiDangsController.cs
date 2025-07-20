@@ -74,8 +74,10 @@ namespace WebTravel.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaBaiDang,NoiDung,AnhVideo,LuotLike,MaKH")] BaiDang baiDang)
+        public async Task<IActionResult> Create([Bind("NoiDung,AnhVideo")] BaiDang baiDang)
         {
+            baiDang.LuotLike = 0;
+            baiDang.MaKH = Guid.Parse(HttpContext.Session.GetString("Id"));
             if (ModelState.IsValid)
             {
                 baiDang.MaBaiDang = Guid.NewGuid();

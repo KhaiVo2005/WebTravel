@@ -6,7 +6,7 @@ public class ThanhPho
 {
     [Key]
     public Guid MaTP { get; set; }
-    public string TenThanhPho { get; set; }
+    public required string TenThanhPho { get; set; }
 
     public ICollection<DiaDiem> DiaDiems { get; set; } = new List<DiaDiem>();
 }

@@ -48,7 +48,7 @@ namespace WebTravel.Areas.CSKH.Controllers
         // GET: CSKH/BaiDangs/Create
         public IActionResult Create()
         {
-            ViewData["MaKH"] = new SelectList(_context.KhachHangs, "MaKH", "MaKH");
+            ViewData["MaKH"] = new SelectList(_context.KhachHangs, "MaKH", "HoTen");
             return View();
         }
 
@@ -66,7 +66,7 @@ namespace WebTravel.Areas.CSKH.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaKH"] = new SelectList(_context.KhachHangs, "MaKH", "MaKH", baiDang.MaKH);
+            ViewData["MaKH"] = new SelectList(_context.KhachHangs, "MaKH", "HoTen", baiDang.KhachHang.HoTen);
             return View(baiDang);
         }
 
@@ -78,12 +78,12 @@ namespace WebTravel.Areas.CSKH.Controllers
                 return NotFound();
             }
 
-            var baiDang = await _context.BaiDangs.FindAsync(id);
+            var baiDang = await _context.BaiDangs.Include(kh => kh.KhachHang).FirstOrDefaultAsync(bd => bd.MaBaiDang == id);
             if (baiDang == null)
             {
                 return NotFound();
             }
-            ViewData["MaKH"] = new SelectList(_context.KhachHangs, "MaKH", "MaKH", baiDang.MaKH);
+            ViewData["MaKH"] = new SelectList(_context.KhachHangs, "MaKH", "HoTen", baiDang.KhachHang.HoTen);
             return View(baiDang);
         }
 
@@ -119,7 +119,7 @@ namespace WebTravel.Areas.CSKH.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaKH"] = new SelectList(_context.KhachHangs, "MaKH", "MaKH", baiDang.MaKH);
+            ViewData["MaKH"] = new SelectList(_context.KhachHangs, "MaKH", "HoTen", baiDang.KhachHang.HoTen);
             return View(baiDang);
         }
 

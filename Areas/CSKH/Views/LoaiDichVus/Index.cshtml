@@ -1,74 +1,62 @@
 ﻿@model IEnumerable<LoaiDichVu>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh sách dịch vụ";
     Layout = "~/Areas/CSKH/Views/Shared/_LayoutCSKH.cshtml";
 }
 
-<h1>Index</h1>
-<table class="table">
-    <thead>
+<h2 class="mb-3">Danh sách dịch vụ</h2>
+
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-light">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TenDV)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GiaDV)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MoTa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Anh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NhanVien)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DiaDiem)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.TenDV)</th>
+            <th>@Html.DisplayNameFor(model => model.GiaDV)</th>
+            <th>@Html.DisplayNameFor(model => model.MoTa)</th>
+            <th>@Html.DisplayNameFor(model => model.Anh)</th>
+            <th>@Html.DisplayNameFor(model => model.NhanVien)</th>
+            <th>@Html.DisplayNameFor(model => model.DiaDiem)</th>
+            <th>Trạng thái</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenDV)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GiaDV)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MoTa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Anh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NhanVien.MaNV)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiaDiem.MaDD)
-            </td>
-            <td>
-                @if (item.TrangThai == 0)
-                {
-                    <span class="badge bg-warning text-dark">⏳ Chờ duyệt</span>
-                    <br />
-                    <a asp-action="CapNhatTrangThai" asp-route-id="@item.MaLoaiDV" asp-route-trangThai="1" class="btn btn-success btn-sm mt-1">✔️ Duyệt</a>
-                    <a asp-action="CapNhatTrangThai" asp-route-id="@item.MaLoaiDV" asp-route-trangThai="2" class="btn btn-danger btn-sm mt-1">❌ Từ chối</a>
-                }
-                else if (item.TrangThai == 1)
-                {
-                    <span class="badge bg-success">✔️ Đã duyệt</span>
-                }
-                else if (item.TrangThai == 2)
-                {
-                    <span class="badge bg-danger">❌ Đã từ chối</span>
-                }
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TenDV</td>
+                <td>@item.GiaDV.ToString("N0") đ</td>
+                <td>@item.MoTa</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Anh))
+                    {
+                        <img src="/@item.Anh" alt="Ảnh dịch vụ" width="80" class="rounded border" />
+                    }
+                    else
+                    {
+                        <span class="text-muted">Không có ảnh</span>
+                    }
+                </td>
+                <td>@item.NhanVien?.HoTen</td>
+                <td>@item.DiaDiem?.TenDiaDiem</td>
+                <td>
+                    @if (item.TrangThai == 0)
+                    {
+                        <span class="badge bg-warning text-dark">⏳ Chờ duyệt</span>
+                
+                        <br />
+                        <a asp-action="CapNhatTrangThai" asp-route-id="@item.MaLoaiDV" asp-route-trangThai="1" class="btn btn-sm btn-success mt-1">✔️ Duyệt</a>
+                        <a asp-action="CapNhatTrangThai" asp-route-id="@item.MaLoaiDV" asp-route-trangThai="2" class="btn btn-sm btn-danger mt-1">❌ Từ chối</a>
+                    }
+                    else if (item.TrangThai == 1)
+                    {
+                        <span class="badge bg-success">✔️ Đã duyệt</span>
+                    }
+                    else if (item.TrangThai == 2)
+                    {
+                        <span class="badge bg-danger">❌ Từ chối</span>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

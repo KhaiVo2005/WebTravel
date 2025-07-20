@@ -1,50 +1,74 @@
 ﻿@model DiaDiem
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Chỉnh sửa địa điểm";
     Layout = "~/Areas/CSKH/Views/Shared/_LayoutCSKH.cshtml";
 }
 
-<h1>Edit</h1>
+<h2 class="mb-4">Chỉnh sửa địa điểm</h2>
 
-<h4>DiaDiem</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
             <input type="hidden" asp-for="MaDD" />
-            <div class="form-group">
-                <label asp-for="TenDiaDiem" class="control-label"></label>
+
+            <div class="form-group mb-3">
+                <label asp-for="TenDiaDiem" class="form-label"></label>
                 <input asp-for="TenDiaDiem" class="form-control" />
                 <span asp-validation-for="TenDiaDiem" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="MoTa" class="control-label"></label>
-                <input asp-for="MoTa" class="form-control" />
+
+            <div class="form-group mb-3">
+                <label asp-for="MoTa" class="form-label"></label>
+                <textarea asp-for="MoTa" class="form-control"></textarea>
                 <span asp-validation-for="MoTa" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Anh" class="control-label"></label>
-                <input asp-for="Anh" class="form-control" />
+
+            <div class="form-group mb-3">
+                <label class="form-label">Ảnh hiện tại</label><br />
+                @if (!string.IsNullOrEmpty(Model.Anh))
+                {
+                    <img src="/@Model.Anh" alt="Ảnh hiện tại" style="max-height: 150px;" />
+                }
+                else
+                {
+                    <p><em>Chưa có ảnh</em></p>
+                }
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Anh" class="form-label">Thay đổi ảnh</label>
+                <input type="file" name="AnhFile" class="form-control" accept="image/*" onchange="previewImage(this)" />
+                <img id="preview" src="#" alt="Preview" class="mt-2" style="max-height: 150px; display: none;" />
                 <span asp-validation-for="Anh" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="MaTP" class="control-label"></label>
+
+            <div class="form-group mb-3">
+                <label asp-for="MaTP" class="form-label"></label>
                 <select asp-for="MaTP" class="form-control" asp-items="ViewBag.MaTP"></select>
                 <span asp-validation-for="MaTP" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+
+            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+            <a asp-action="Index" class="btn btn-secondary ms-2">Huỷ</a>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function previewImage(input) {
+            const preview = document.getElementById('preview');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 }

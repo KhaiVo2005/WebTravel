@@ -1,55 +1,60 @@
 ﻿@model LoaiDichVu
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Chi tiết dịch vụ";
     Layout = "~/Areas/CSKH/Views/Shared/_LayoutCSKH.cshtml";
 }
 
-<h1>Details</h1>
+<h2 class="mb-3">Chi tiết dịch vụ</h2>
 
-<div>
-    <h4>LoaiDichVu</h4>
-    <hr />
+<div class="border rounded p-3">
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TenDV)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TenDV)
+        <dt class="col-sm-3">Tên dịch vụ</dt>
+        <dd class="col-sm-9">@Model.TenDV</dd>
+
+        <dt class="col-sm-3">Giá dịch vụ</dt>
+        <dd class="col-sm-9">@Model.GiaDV.ToString("N0") đ</dd>
+
+        <dt class="col-sm-3">Mô tả</dt>
+        <dd class="col-sm-9">@Model.MoTa</dd>
+
+        <dt class="col-sm-3">Ảnh</dt>
+        <dd class="col-sm-9">
+            @if (!string.IsNullOrEmpty(Model.Anh))
+            {
+                <img src="/@Model.Anh" alt="Ảnh dịch vụ" width="150" class="rounded border" />
+            }
+            else
+            {
+                <span class="text-muted">Không có ảnh</span>
+            }
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GiaDV)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GiaDV)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MoTa)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MoTa)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Anh)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Anh)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NhanVien)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NhanVien.MaNV)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DiaDiem)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DiaDiem.MaDD)
-        </dd>
+
+        <dt class="col-sm-3">Nhân viên</dt>
+        <dd class="col-sm-9">@Model.NhanVien?.HoTen</dd>
+
+        <dt class="col-sm-3">Địa điểm</dt>
+        <dd class="col-sm-9">@Model.DiaDiem?.TenDiaDiem</dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.MaLoaiDV">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+    <div class="mt-3">
+        @if (Model.TrangThai == 0)
+        {
+            <span class="badge bg-warning text-dark">⏳ Chờ duyệt</span>
+        
+            <br />
+            <a asp-action="CapNhatTrangThai" asp-route-id="@Model.MaLoaiDV" asp-route-trangThai="1" class="btn btn-sm btn-success mt-1">✔️ Duyệt</a>
+            <a asp-action="CapNhatTrangThai" asp-route-id="@Model.MaLoaiDV" asp-route-trangThai="2" class="btn btn-sm btn-danger mt-1">❌ Từ chối</a>
+        }
+        else if (Model.TrangThai == 1)
+        {
+            <span class="badge bg-success">✔️ Đã duyệt</span>
+        }
+        else if (Model.TrangThai == 2)
+        {
+            <span class="badge bg-danger">❌ Từ chối</span>
+        }
+    </div>
+
+    <a asp-action="Index" class="btn btn-outline-secondary mt-3">← Quay lại danh sách</a>
 </div>

@@ -1,84 +1,54 @@
 ﻿@model IEnumerable<KhachHang>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh sách khách hàng";
     Layout = "~/Areas/CSKH/Views/Shared/_LayoutCSKH.cshtml";
 }
 
-<h1>Index</h1>
+<h2 class="mb-4">Danh sách khách hàng</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+<table class="table table-bordered table-striped align-middle">
+    <thead class="table-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.HoTen)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TenDangNhap)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MatKhau)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DiaChi)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NgaySinh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GioiTinh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SoDienThoai)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AnhDaiDien)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.HoTen)</th>
+            <th>@Html.DisplayNameFor(model => model.TenDangNhap)</th>
+            <th>@Html.DisplayNameFor(model => model.MatKhau)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>@Html.DisplayNameFor(model => model.DiaChi)</th>
+            <th>@Html.DisplayNameFor(model => model.NgaySinh)</th>
+            <th>@Html.DisplayNameFor(model => model.GioiTinh)</th>
+            <th>@Html.DisplayNameFor(model => model.SoDienThoai)</th>
+            <th>Ảnh đại diện</th>
+            <th>Thao tác</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.HoTen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenDangNhap)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MatKhau)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiaChi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgaySinh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GioiTinh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SoDienThoai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AnhDaiDien)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaKH">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaKH">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaKH">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.HoTen</td>
+                <td>@item.TenDangNhap</td>
+                <td>@item.MatKhau</td>
+                <td>@item.Email</td>
+                <td>@item.DiaChi</td>
+                <td>@item.NgaySinh.ToString("dd/MM/yyyy")</td>
+                <td>@item.GioiTinh</td>
+                <td>@item.SoDienThoai</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.AnhDaiDien))
+                    {
+                        <img src="/@item.AnhDaiDien" alt="Ảnh" style="height: 60px;" class="rounded" />
+                    }
+                    else
+                    {
+                        <span class="text-muted">Chưa có ảnh</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.MaKH" class="btn btn-sm btn-info me-1">Chi tiết</a>
+                    <a asp-action="Delete" asp-route-id="@item.MaKH" class="btn btn-sm btn-danger">Xoá</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

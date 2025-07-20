@@ -27,6 +27,7 @@ public class AccountController : Controller
         var kh = _context.KhachHangs.FirstOrDefault(k => k.TenDangNhap == username && k.MatKhau == password);
         if (kh != null)
         {
+            HttpContext.Session.SetString("Id", kh.MaKH.ToString());
             HttpContext.Session.SetString("Username", kh.TenDangNhap);
             HttpContext.Session.SetString("Role", "KhachHang");
             HttpContext.Session.SetString("FullName", kh.HoTen);

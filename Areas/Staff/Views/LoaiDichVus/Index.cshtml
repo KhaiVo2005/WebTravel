@@ -1,63 +1,44 @@
 ﻿@model IEnumerable<LoaiDichVu>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh sách dịch vụ";
     Layout = "~/Areas/Staff/Views/Shared/_LayoutStaff.cshtml";
 }
 
-<h1>Index</h1>
+<h2 class="mb-4">Danh sách loại dịch vụ</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">➕ Đăng ký dịch vụ mới</a>
 </p>
-<table class="table">
-    <thead>
+
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-light">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TenDV)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GiaDV)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MoTa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Anh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DiaDiem)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NhanVien)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrangThai)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.TenDV)</th>
+            <th>@Html.DisplayNameFor(model => model.GiaDV)</th>
+            <th>@Html.DisplayNameFor(model => model.MoTa)</th>
+            <th>Hình ảnh</th>
+            <th>@Html.DisplayNameFor(model => model.NhanVien)</th>
+            <th>@Html.DisplayNameFor(model => model.DiaDiem)</th>
+            <th>@Html.DisplayNameFor(model => model.TrangThai)</th>
+            <th>Thao tác</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenDV)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GiaDV)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MoTa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Anh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NhanVien.HoTen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiaDiem.TenDiaDiem)
-            </td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TenDV</td>
+                <td>@item.GiaDV.ToString("N0") ₫</td>
+                <td>@item.MoTa</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Anh))
+                    {
+                        <img src="/@item.Anh" style="width: 80px;" class="img-thumbnail" alt="Ảnh dịch vụ" />
+                    }
+                </td>
+                <td>@item.NhanVien?.HoTen</td>
+                <td>@item.DiaDiem?.TenDiaDiem</td>
                 <td>
                     @if (item.TrangThai == 0)
                     {
@@ -72,12 +53,12 @@
                         <span class="badge bg-danger">❌ Từ chối</span>
                     }
                 </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaLoaiDV">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaLoaiDV">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaLoaiDV">Delete</a>
-            </td>
-        </tr>
-}
+                <td>
+                    <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@item.MaLoaiDV">Xem</a>
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.MaLoaiDV">Sửa</a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.MaLoaiDV">Xoá</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

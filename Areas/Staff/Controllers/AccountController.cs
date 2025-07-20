@@ -4,7 +4,6 @@ using WebTravel.Data;
 
 namespace WebTravel.Areas.Staff.Controllers
 {
-    [CheckStaff]
     [Area("Staff")]
     public class AccountController : Controller
     {
@@ -31,6 +30,7 @@ namespace WebTravel.Areas.Staff.Controllers
 
             if (nv != null)
             {
+                HttpContext.Session.SetString("Id", nv.MaNV.ToString());
                 HttpContext.Session.SetString("Username", nv.TenDangNhap);
                 HttpContext.Session.SetString("FullName", nv.HoTen);
                 HttpContext.Session.SetString("Role", "NhanVien");

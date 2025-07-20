@@ -46,7 +46,7 @@ app.MapRazorPages()
 
 app.MapControllerRoute(
     name: "area",
-    pattern: "{area:exists}/{controller=Account}/{action=Login}/{id?}"
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
 );
 
 app.MapControllerRoute(

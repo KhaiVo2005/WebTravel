@@ -48,7 +48,7 @@ namespace WebTravel.Areas.CSKH.Controllers
         // GET: CSKH/DiaDiems/Create
         public IActionResult Create()
         {
-            ViewData["MaTP"] = new SelectList(_context.ThanhPhos, "MaTP", "MaTP");
+            ViewData["MaTP"] = new SelectList(_context.ThanhPhos, "MaTP", "TenThanhPho");
             return View();
         }
 
@@ -78,12 +78,12 @@ namespace WebTravel.Areas.CSKH.Controllers
                 return NotFound();
             }
 
-            var diaDiem = await _context.DiaDiems.FindAsync(id);
+            var diaDiem = await _context.DiaDiems.Include(tp => tp.ThanhPho).FirstOrDefaultAsync(dd=> dd.MaDD == id);
             if (diaDiem == null)
             {
                 return NotFound();
             }
-            ViewData["MaTP"] = new SelectList(_context.ThanhPhos, "MaTP", "MaTP", diaDiem.MaTP);
+            ViewData["MaTP"] = new SelectList(_context.ThanhPhos, "MaTP", "TenThanhPho", diaDiem.ThanhPho.TenThanhPho);
             return View(diaDiem);
         }
 

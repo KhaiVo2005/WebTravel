@@ -1,54 +1,49 @@
 ﻿@model IEnumerable<DiaDiem>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh sách địa điểm";
     Layout = "~/Areas/CSKH/Views/Shared/_LayoutCSKH.cshtml";
 }
 
-<h1>Index</h1>
+<h2 class="mb-4">Danh sách địa điểm</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-success mb-3" asp-action="Create">+ Thêm địa điểm</a>
 </p>
-<table class="table">
-    <thead>
+
+<table class="table table-bordered table-hover">
+    <thead class="thead-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TenDiaDiem)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MoTa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Anh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThanhPho)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.TenDiaDiem)</th>
+            <th>@Html.DisplayNameFor(model => model.MoTa)</th>
+            <th>@Html.DisplayNameFor(model => model.Anh)</th>
+            <th>@Html.DisplayNameFor(model => model.ThanhPho)</th>
+            <th class="text-center">Thao tác</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenDiaDiem)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MoTa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Anh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThanhPho.MaTP)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaDD">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaDD">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaDD">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TenDiaDiem</td>
+                <td>@item.MoTa</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Anh))
+                    {
+                        <img src="/@item.Anh" width="100" class="img-thumbnail" />
+                    }
+                    else
+                    {
+                        <span class="text-muted">Không có ảnh</span>
+                    }
+                </td>
+                <td>@item.ThanhPho?.TenThanhPho</td>
+                <td class="text-center">
+                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.MaDD">Sửa</a>
+                    <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@item.MaDD">Chi tiết</a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.MaDD">Xoá</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
